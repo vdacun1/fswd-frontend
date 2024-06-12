@@ -6,6 +6,7 @@ import AccessorySelect from "@/components/client/Accessory/AccessorySelect";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import {createUserToy} from "@/middleware/services/UserToyService";
+import UserToyItem from "@/components/server/UserToy/UserToyItem";
 
 export default function NewToyForm({toys, colors, accessories}) {
   const router = useRouter();
@@ -47,6 +48,7 @@ export default function NewToyForm({toys, colors, accessories}) {
           <p className="text-lg mb-20">
             Has seleccionado un <strong>{selectedToy}</strong> de color <strong>{selectedColor}</strong> con una <strong>{selectedAccessory}</strong> como accesorio.
           </p>
+          <UserToyItem item={{toy: selectedToy, color: selectedColor, accessory: selectedAccessory}}/>
           <p className="text-lg my-4">
             ¿Deseas confirmar la selección?
           </p>

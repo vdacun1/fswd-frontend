@@ -82,7 +82,9 @@ export default function UserToyItem({item}) {
       )}
       
       {!!item.total && (
-        <span className="shrink-0 my-8">Se han comprado un total de {item.total} {item.total === 1 ? "peluche" : "peluches"} como este.</span>
+        <div className="my-8">
+        <span className="shrink-0">Se ha comprado un total de {item.total} {item.total === 1 ? "peluche" : "peluches"} como este.</span>
+        </div>
       )}
     </div>
   );

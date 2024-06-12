@@ -1,7 +1,7 @@
 "use client";
-import { setToken } from "@/middleware/AuthService";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import {login, logout} from "@/middleware/services/AuthService";
+import {useRouter} from "next/navigation";
+import React, {useEffect, useState} from "react";
 import Locale from "./locale";
 
 const LoginPage = () => {
@@ -9,36 +9,38 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const text = Locale["es"];
-
+  
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
+  
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await setToken(email + password).then(() => {
+    
+    try {
+      await login(email, password);
       router.push("/");
-    });
+    } catch (e) {
+      console.error(e);
+    }
   };
-
+  
+  useEffect(() => {
+    logout().then(() => console.log("Logged out"));
+  }, []);
+  
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           {text.title}
         </h2>
       </div>
-
+      
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
@@ -61,7 +63,7 @@ const LoginPage = () => {
               />
             </div>
           </div>
-
+          
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -92,7 +94,7 @@ const LoginPage = () => {
               />
             </div>
           </div>
-
+          
           <div>
             <button
               type="submit"
@@ -102,7 +104,7 @@ const LoginPage = () => {
             </button>
           </div>
         </form>
-
+        
         <p className="mt-10 text-center text-sm text-gray-500">
           {text.needToRegister}
           <a

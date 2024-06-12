@@ -19,6 +19,12 @@ export default async function HttpClientService() {
         headers: await setHeaders(auth),
       });
     },
+    
+    delete: async function (path, auth = false) {
+      return axios.delete(config.api.url + path, {
+        headers: await setHeaders(auth),
+      });
+    },
   };
 }
 

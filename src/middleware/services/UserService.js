@@ -16,4 +16,20 @@ async function getUser() {
   }
 }
 
-export { getUser };
+async function register({email, password}) {
+  const config = await Config();
+  const httpClientService = await HttpClientService();
+  
+  try{
+    const response = await httpClientService.post(
+      config.api.user.register,
+      {email, password},
+      false);
+    
+    return response.data;
+  } catch (e) {
+    return e.response.data;
+  }
+}
+
+export { getUser, register };

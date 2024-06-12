@@ -20,7 +20,7 @@ export default async function RankingItems() {
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         {response.data.map((item) => (
-          <UserToyItem key={item.toy} item={item}/>
+          <UserToyItem key={btoa(JSON.stringify(item))} item={item}/>
         ))}
       </div>
     </div>

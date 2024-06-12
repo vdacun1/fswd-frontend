@@ -8,8 +8,13 @@ async function login(email, password) {
   const config = await Config();
   const httpClientService = await HttpClientService();
   
-  const response = await httpClientService.post(config.api.auth.login, {email, password});
-  await setToken(response.data.token)
+  try {
+    const response = await httpClientService.post(config.api.auth.login, {email, password});
+    await setToken(response.data.token)
+    return response.data
+  } catch (e) {
+    return e.response.data
+  }
 }
 
 async function logout() {
